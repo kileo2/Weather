@@ -1,0 +1,37 @@
+process.env.NODE_ENV = 'test';
+const expect = require('chai').expect;
+let chai = require('chai');
+let chaiHttp = require('chai-http');
+let server = require('../index.js');
+let should = chai.should();
+const myFunctions = require('../app/controllers/weather');
+
+
+console.log(myFunctions);
+chai.use(chaiHttp);
+
+describe('Get Weather Back', ()=>{
+    it('Get Weather in different cities',()=>{
+        expect (typeof myFunctions).to.equal('function');
+    });
+});
+
+describe('Test', function() {
+    it('it should GET the index.html file', (done) => {
+        chai.request(server)
+            .get('/index.html')
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.should.be.html;
+                done();
+            });
+    });
+
+    it('it should return 404', (done) => {
+        chai.request(server)      .get('/index2.html')
+            .end((err, res) => {
+                res.should.have.status(404);
+                done();
+            });
+    });
+});
